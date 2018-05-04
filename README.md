@@ -34,6 +34,11 @@ mus.setPlaybackSpeed(mus.speed.SLOW);
 mus.play();
 ```
 
+## Example
+
+
+<img height="300" src="https://i.imgur.com/GCYD9EP.gif"/>
+
 
 ## Public methods
 
