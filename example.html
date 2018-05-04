@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script src="mus.js"></script>
+		<style>
+		.move-mouse-here {
+			width: 400px;
+			height: 200px;
+			display: table;
+			margin: 0 auto;
+			background-color: #33ff00;
+			text-align: center;
+			line-height: 200px;
+		}
+
+		.click-here {
+			width: 400px;
+			height: 200px;
+			display: table;
+			margin: 0 auto;
+			background-color: #00ffff;
+			text-align: center;
+			line-height: 200px;
+		}
+
+		.scroll-here {
+			width: 400px;
+			height: 2000px;
+			display: table;
+			margin: 0 auto;
+			background-color: #00c4ff;
+			text-align: center;
+			line-height: 200px;
+		}
+		</style>
+	</head>
+	<body>
+		<div class="controls">
+			<h1>Mus.js</h1>
+			<p>Status: <span id="status"></span></p>
+			<p>Speed: <span id="speed">Normal</span></p>
+			<br/>
+			<button id="recording" onclick="toggleRecord();">Start recording</button>
+			<button id="play" onclick="play();">Playback</button>
+			<br/>
+			<button onclick="mus.setPlaybackSpeed(mus.speed.SLOW);">Slow</button>
+			<button onclick="mus.setPlaybackSpeed(mus.speed.NORMAL);">Normal</button>
+			<button onclick="mus.setPlaybackSpeed(mus.speed.FAST);">Fast</button>
+			<br/>
+			<button onclick="mus.release();">Release</button>
+		</div>
+
+		<div class="guide">
+			<div class="move-mouse-here">Move mouse here!</div>
+
+			<div class="click-here">Click here!</div>
+
+			<div class="scroll-here">Scroll here!</div>
+		</div>
+
+		<script>
+			var mus = new Mus();
+			mus.setPlaybackSpeed(mus.speed.SLOW);
+
+			var toggleRecord = function() {
+				if (mus.isPlaying()) return;
+				if (!mus.isRecording()) {
+					document.getElementById("status").innerHTML = "Recording";
+					document.getElementById("recording").innerHTML = "Stop recording";
+					mus.record();
+				} else {
+					document.getElementById("status").innerHTML = "Stand by";
+					document.getElementById("recording").innerHTML = "Start recording";
+					mus.stop();
+				}
+			};
+			var play = function() {
+				if (mus.isRecording()) return;
+				if (mus.isPlaying()) {
+					document.getElementById("play").innerHTML = "Play";
+					document.getElementById("status").innerHTML = "Stand by";
+					mus.pause();
+				} else {
+					document.getElementById("play").innerHTML = "Pause";
+					document.getElementById("status").innerHTML = "Playing";
+					mus.play(function() {
+						document.getElementById("play").innerHTML = "Play";
+						document.getElementById("status").innerHTML = "Stand by";
+						console.log(mus.getData());
+					});
+				}
+			};
+			var setSpeed = function(speed) {
+				mus.setPlaybackSpeed(speed);
+				if (speed == mus.speed.SLOW) {
+					document.getElementById("speed").innerHTML = "Slow";
+				} else if (speed == mus.speed.NORMAL) {
+					document.getElementById("speed").innerHTML = "Normal";
+				} else {
+					document.getElementById("speed").innerHTML = "Fast";
+				}
+			};
+		</script>
+	</body>
+</html>
