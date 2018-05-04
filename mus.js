@@ -171,6 +171,18 @@ Mus.prototype = {
 		this.playing = true;
 	},
 
+	/**
+	 * Releases Mus instance
+	 */
+	release : function() {
+		this.frames = [];
+		this.startedAt = 0;
+		this.finishedAt = 0;
+		this.stop();
+		this.destroyCursor();
+		this.destroyClickSnapshot();
+	},
+
 	/** Mus internal functions **/
 
 	/**
@@ -292,7 +304,7 @@ Mus.prototype = {
 		return parseInt(window.outerHeight * y / this.window.height);
 	},
 
-	/** Getters and setters **/
+	/** Public getters and setters **/
 
 	/**
 	 * Get all generated Mus data
@@ -316,11 +328,6 @@ Mus.prototype = {
 	setData : function(data) {
 		if (data.frames) this.frames = data.frames;
 		if (data.window) this.window = data.window;
-
-		if (data.timeElapsed) {
-			this.startedAt = 0;
-			this.finishedAt = data.timeElapsed;
-		}
 	},
 
 	/**
@@ -363,18 +370,6 @@ Mus.prototype = {
 	 */
 	isPlaying : function() {
 		return this.playing;
-	},
-
-	/**
-	 * Releases Mus instance
-	 */
-	release : function() {
-		this.frames = [];
-		this.startedAt = 0;
-		this.finishedAt = 0;
-		this.stop();
-		this.destroyCursor();
-		this.destroyClickSnapshot();
 	},
 
 	/** Mus speed constants **/
