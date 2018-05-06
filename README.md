@@ -85,5 +85,11 @@ Informs if **mus** is currently recording something.
 #### isPlaying()
 Informs if **mus** is currently playing something.
 
+# Roadmap
+- Detect touch movements and clicks;
+- Get form inputs;
+- Allows real clicks during setup (default false);
+- Suggestions are greatly appreciated!
+
 # License
 MIT
