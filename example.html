@@ -3,6 +3,15 @@
 	<head>
 		<script src="mus.js"></script>
 		<style>
+		.controls {
+			margin-bottom: 20px;
+		}
+
+		.controls td {
+			vertical-align: top;
+			padding: 0 20px;
+		}
+
 		.move-mouse-here {
 			width: 400px;
 			height: 200px;
@@ -32,23 +41,35 @@
 			text-align: center;
 			line-height: 200px;
 		}
+
+		#console {
+			font-size: 10px;
+		}
 		</style>
 	</head>
 	<body>
-		<div class="controls">
-			<h1>Mus.js</h1>
-			<p>Status: <span id="status"></span></p>
-			<p>Speed: <span id="speed">Normal</span></p>
-			<br/>
-			<button id="recording" onclick="toggleRecord();">Start recording</button>
-			<button id="play" onclick="play();">Playback</button>
-			<br/>
-			<button onclick="mus.setPlaybackSpeed(mus.speed.SLOW);">Slow</button>
-			<button onclick="mus.setPlaybackSpeed(mus.speed.NORMAL);">Normal</button>
-			<button onclick="mus.setPlaybackSpeed(mus.speed.FAST);">Fast</button>
-			<br/>
-			<button onclick="mus.release();">Release</button>
-		</div>
+		<table class="controls">
+			<tr>
+				<td>
+					<h1>Mus.js</h1>
+					<p>Status: <span id="status"></span></p>
+					<p>Speed: <span id="speed">Normal</span></p>
+					<br/>
+					<button id="recording" onclick="toggleRecord();">Start recording</button>
+					<button id="play" onclick="play();">Playback</button>
+					<br/>
+					<button onclick="mus.setPlaybackSpeed(mus.speed.SLOW);">Slow</button>
+					<button onclick="mus.setPlaybackSpeed(mus.speed.NORMAL);">Normal</button>
+					<button onclick="mus.setPlaybackSpeed(mus.speed.FAST);">Fast</button>
+					<br/>
+					<button onclick="releaseMus();">Release</button>
+				</td>
+				<td>
+					<h2>Data console</h2>
+					<textarea id="console" rows="12" cols="100"></textarea>
+				</td>
+			</tr>
+		</table>
 
 		<div class="guide">
 			<div class="move-mouse-here">Move mouse here!</div>
@@ -62,6 +83,10 @@
 			var mus = new Mus();
 			mus.setPlaybackSpeed(mus.speed.SLOW);
 
+			var releaseMus = function() {
+				mus.release();
+				document.getElementById('console').innerHTML='';
+			};
 			var toggleRecord = function() {
 				if (mus.isPlaying()) return;
 				if (!mus.isRecording()) {
@@ -72,6 +97,9 @@
 					document.getElementById("status").innerHTML = "Stand by";
 					document.getElementById("recording").innerHTML = "Start recording";
 					mus.stop();
+
+					// Save data to textarea
+					document.getElementById("console").innerHTML = JSON.stringify(mus.getData());
 				}
 			};
 			var play = function() {
@@ -86,7 +114,6 @@
 					mus.play(function() {
 						document.getElementById("play").innerHTML = "Play";
 						document.getElementById("status").innerHTML = "Stand by";
-						console.log(mus.getData());
 					});
 				}
 			};
