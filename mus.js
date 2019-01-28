@@ -88,7 +88,7 @@ Mus.prototype = {
 	/**
 	 * Starts screen recording
 	 */
-	record : function() {
+	record : function(onFrame) {
 		if (this.recording) return;
 
 		var self = this;
@@ -100,12 +100,15 @@ Mus.prototype = {
 		// Defines Mus listeners on window
 		window.onmousemove = this.moveListener(function(pos) {
 			self.frames.push(pos);
+			if (onFrame instanceof Function) onFrame();
 		});
 		window.onmousedown = this.clickListener(function(click) {
 			self.frames.push(click);
+			if (onFrame instanceof Function) onFrame();
 		});
 		window.onscroll = this.scrollListener(function(scroll) {
 			self.frames.push(scroll);
+			if (onFrame instanceof Function) onFrame();
 		});
 
 		// Sets our recording flag

@@ -83,23 +83,26 @@
 			var mus = new Mus();
 			mus.setPlaybackSpeed(mus.speed.SLOW);
 
+			var setConsoleData = function() {
+				var textarea = document.getElementById("console");
+				textarea.innerHTML = JSON.stringify(mus.getData());
+				textarea.scrollTop = textarea.scrollHeight;
+			};
 			var releaseMus = function() {
 				mus.release();
-				document.getElementById('console').innerHTML='';
+				setConsoleData();
 			};
 			var toggleRecord = function() {
 				if (mus.isPlaying()) return;
 				if (!mus.isRecording()) {
 					document.getElementById("status").innerHTML = "Recording";
 					document.getElementById("recording").innerHTML = "Stop recording";
-					mus.record();
+					mus.record(setConsoleData);
 				} else {
 					document.getElementById("status").innerHTML = "Stand by";
 					document.getElementById("recording").innerHTML = "Start recording";
 					mus.stop();
-
-					// Save data to textarea
-					document.getElementById("console").innerHTML = JSON.stringify(mus.getData());
+					setConsoleData();
 				}
 			};
 			var play = function() {
@@ -127,6 +130,7 @@
 					document.getElementById("speed").innerHTML = "Fast";
 				}
 			};
+			setConsoleData();
 		</script>
 	</body>
 </html>
