@@ -1,5 +1,5 @@
 /*!
- * Mus.js v1.0.0
+ * Mus.js v1.0.1
  * (c) 2018 Mauricio Giordano <giordano@inevent.us> - InEvent
  * Released under the MIT License.
  */
