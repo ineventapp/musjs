@@ -9,7 +9,7 @@ A simple mouse tracking library to provide insights on how your users are handli
 
 This library was created so you don't need an external service to "record" your users mouse events and "play" them in a later moment.
 
-**mus** works with any AMD you wish and its setup is extremely simple
+**mus** works with any AMD you wish and its setup is extremely simple - **5.6kb**
 
 ## Recording
 ```js
