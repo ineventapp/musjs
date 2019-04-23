@@ -79,17 +79,32 @@ Allows playback to be faster or slower.
 Default constants: `mus.speed.SLOW` (35), `mus.speed.NORMAL` (15), `mus.speed.FAST` (5)
 You may decide to use custom values as you wish.
 
+#### setTimePoint(bool)
+Records time elapsed for each point for a precise data recording.
+Default: disabled
+
 #### isRecording()
 Informs if **mus** is currently recording something.
 
 #### isPlaying()
 Informs if **mus** is currently playing something.
 
+#### isTimePoint()
+Informs if **mus** is recording time for each data point.
+
 # Roadmap
 - Detect touch movements and clicks;
 - Get form inputs;
 - Allows real clicks during setup (default false);
 - Suggestions are greatly appreciated!
+
+# Version history
+
+## v1.1.0
+- Added time point recording for precise data;
+
+## v1.0.1
+- Added minified file for distribution;
 
 # License
 MIT

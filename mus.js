@@ -1,5 +1,5 @@
 /*!
- * Mus.js v1.0.1
+ * Mus.js v1.1.0
  * (c) 2018 Mauricio Giordano <giordano@inevent.us> - InEvent
  * Released under the MIT License.
  */
@@ -29,6 +29,7 @@ function Mus() {
 	this.currPos = 0;
 	this.startedAt = 0;
 	this.finishedAt = 0;
+	this.timePoint = false;
 	this.recording = false;
 	this.playing = false;
 	this.playbackSpeed = this.speed.NORMAL;
@@ -99,15 +100,15 @@ Mus.prototype = {
 		
 		// Defines Mus listeners on window
 		window.onmousemove = this.moveListener(function(pos) {
-			self.frames.push(pos);
+			self.frames.push(self.timePoint ? pos.concat(new Date().getTime() - (self.startedAt * 1000)) : pos);
 			if (onFrame instanceof Function) onFrame();
 		});
 		window.onmousedown = this.clickListener(function(click) {
-			self.frames.push(click);
+			self.frames.push(self.timePoint ? click.concat(new Date().getTime() - (self.startedAt * 1000)) : click);
 			if (onFrame instanceof Function) onFrame();
 		});
 		window.onscroll = this.scrollListener(function(scroll) {
-			self.frames.push(scroll);
+			self.frames.push(self.timePoint ? scroll.concat(new Date().getTime() - (self.startedAt * 1000)) : scroll);
 			if (onFrame instanceof Function) onFrame();
 		});
 
@@ -155,6 +156,9 @@ Mus.prototype = {
 		var node = document.getElementById("musCursor");
 
 		for (; self.pos < self.frames.length; self.pos++) {
+			var delay = self.frames[self.pos].length > 3 ?
+				self.frames[self.pos][3] : self.pos * self.playbackSpeed;
+
 			self.timeouts.push(setTimeout(function(pos) {
 
 				// Plays specific timeout
@@ -168,7 +172,7 @@ Mus.prototype = {
 					self.pos = 0;
 					if (onfinish) onfinish();
 				}
-			}, self.pos * self.playbackSpeed, self.pos));
+			}, delay, self.pos));
 		};
 
 		this.playing = true;
@@ -190,7 +194,6 @@ Mus.prototype = {
 
 	/**
 	 * Play a specific frame from playback
-	 * 
 	 */
 	playFrame : function(self, frame, node) {
 
@@ -325,6 +328,14 @@ Mus.prototype = {
 	},
 
 	/**
+	 * Get point time recording flag
+	 * @return boolean point time flag
+	 */
+	isTimePoint : function() {
+		return this.timePoint;
+	},
+
+	/**
 	 * Sets generated Mus data for playback
 	 * @param data array generated Mus data
 	 */
@@ -357,6 +368,14 @@ Mus.prototype = {
 	 */
 	setPlaybackSpeed : function(speed) {
 		this.playbackSpeed = speed;
+	},
+
+	/**
+	 * Sets point time recording for accurate data
+	 * @param 
+	 */
+	setTimePoint : function(timePoint) {
+		this.timePoint = timePoint;
 	},
 
 	/**

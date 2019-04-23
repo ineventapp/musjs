@@ -62,6 +62,8 @@
 					<button onclick="mus.setPlaybackSpeed(mus.speed.NORMAL);">Normal</button>
 					<button onclick="mus.setPlaybackSpeed(mus.speed.FAST);">Fast</button>
 					<br/>
+					<button id="timePoint" onclick="setTimePoint();">Enable time point</button>
+					<br/>
 					<button onclick="releaseMus();">Release</button>
 				</td>
 				<td>
@@ -83,6 +85,15 @@
 			var mus = new Mus();
 			mus.setPlaybackSpeed(mus.speed.SLOW);
 
+			var setTimePoint = function() {
+				releaseMus();
+				mus.setTimePoint(!mus.isTimePoint());
+				if (mus.isTimePoint()) {
+					document.getElementById("timePoint").innerHTML = "Disable time point";
+				} else {
+					document.getElementById("timePoint").innerHTML = "Enable time point";
+				}
+			};
 			var setConsoleData = function() {
 				var textarea = document.getElementById("console");
 				textarea.innerHTML = JSON.stringify(mus.getData());
