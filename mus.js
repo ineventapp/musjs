@@ -340,8 +340,9 @@ Mus.prototype = {
 	 * @param data array generated Mus data
 	 */
 	setData : function(data) {
-		if (data.frames) this.frames = data.frames;
-		if (data.window) this.window = data.window;
+                const obj = JSON.parse(data);
+		if (obj.frames) this.frames = obj.frames;
+		if (obj.window) this.window = obj.window;
 	},
 
 	/**
