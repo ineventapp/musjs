@@ -340,9 +340,17 @@ Mus.prototype = {
 	 * @param data array generated Mus data
 	 */
 	setData : function(data) {
-                const obj = JSON.parse(data);
-		if (obj.frames) this.frames = obj.frames;
-		if (obj.window) this.window = obj.window;
+        var len=0;
+        len=data.length;
+        if(data.substring(0,1)=="{" && data.substring(len-1,len)=="}")
+        {
+		if(data.substring(1,len-1).match(/(\"frames\":){1}([[,"smc\d\s\]])+[^}]*((\"window\":{[^}]){1})*}?/)!==null)
+		{
+			const obj = JSON.parse(data);
+			if (obj.frames) this.frames = obj.frames;
+			if (obj.window) this.window = obj.window;
+		}
+	}
 	},
 
 	/**
